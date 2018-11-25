@@ -23,7 +23,8 @@ public class StatePagerAdapterFrag extends FragmentStatePagerAdapter {
                 MapsFragment mapsFragment = new MapsFragment();
                 return mapsFragment;
             case 2 :
-                return null;
+                DetailsInfoFrag detailsInfoFrag = new DetailsInfoFrag();
+                return detailsInfoFrag;
             default :
                 return null;
         }

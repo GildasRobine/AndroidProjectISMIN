@@ -6,14 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class MapsFragment extends Fragment {
+public class DetailsInfoFrag extends Fragment {
     //Overriden method onCreateView
-    
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         //Returning the layout file after inflating
         //Change R.layout.tab1 in you classes
-        return inflater.inflate(R.layout.mapsfragment_layout, container, false);
+        return inflater.inflate(R.layout.frag_info_layout, container, false);
     }
 }
