@@ -1,9 +1,10 @@
 package com.robine.gildas.wheretobeer;
 
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+
+import com.robine.gildas.wheretobeer.ListFrag.ListBeerFrag;
 
 public class StatePagerAdapterFrag extends FragmentStatePagerAdapter {
     int mNumOfTabs;
@@ -16,8 +17,8 @@ public class StatePagerAdapterFrag extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch (position){
             case 0 :
-                FragObj1 fragObj1 = new FragObj1();
-                return  fragObj1;
+                ListBeerFrag listBeerFrag = new ListBeerFrag();
+                return listBeerFrag;
             case 1 :
                 MapsFragment mapsFragment = new MapsFragment();
                 return mapsFragment;

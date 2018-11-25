@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FragObj1">
+    tools:context=".ListFrag.ListBeerFrag">
 
     <!-- TODO: Update blank fragment layout -->
 

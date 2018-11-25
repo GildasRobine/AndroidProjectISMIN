@@ -1,4 +1,4 @@
-package com.robine.gildas.wheretobeer;
+package com.robine.gildas.wheretobeer.ListFrag;
 
 import android.content.Context;
 import android.net.Uri;
@@ -9,8 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.robine.gildas.wheretobeer.R;
 
-public class FragObj1 extends Fragment {
+
+public class ListBeerFrag extends Fragment {
     public static final String ARG_OBJECT = "object";
 
     @Override
