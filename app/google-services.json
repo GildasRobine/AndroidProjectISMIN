@@ -1,35 +1,27 @@
 {
   "project_info": {
-    "project_number": "215132256602",
-    "firebase_url": "https://androidprojectismin.firebaseio.com",
-    "project_id": "androidprojectismin",
-    "storage_bucket": "androidprojectismin.appspot.com"
+    "project_number": "860209185827",
+    "firebase_url": "https://beerontheway-40165.firebaseio.com",
+    "project_id": "beerontheway-40165",
+    "storage_bucket": "beerontheway-40165.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:215132256602:android:f3cd2e730303657b",
+        "mobilesdk_app_id": "1:860209185827:android:f3cd2e730303657b",
         "android_client_info": {
           "package_name": "com.robine.gildas.wheretobeer"
         }
       },
       "oauth_client": [
         {
-          "client_id": "215132256602-lm1qvgp1s618bpifrhc43otvt8cl348j.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.robine.gildas.wheretobeer",
-            "certificate_hash": "346dea9181b46a6dc9a4a15ec5d86c682b9e961b"
-          }
-        },
-        {
-          "client_id": "215132256602-os9p0dkn7v8eh7lr5rd1njsjprqmu9jm.apps.googleusercontent.com",
+          "client_id": "860209185827-dg84ti18klp7e931522ug4ahmftj3ms4.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAPDWUFsGsh43wPtfh_3dTbWJpAwDTWO2w"
+          "current_key": "AIzaSyAHWRL-0ZjZMG86CMudwMZ18ze5HhR_7ZM"
         }
       ],
       "services": {
@@ -37,13 +29,8 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "215132256602-os9p0dkn7v8eh7lr5rd1njsjprqmu9jm.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "status": 1,
+          "other_platform_oauth_client": []
         },
         "ads_service": {
           "status": 2
