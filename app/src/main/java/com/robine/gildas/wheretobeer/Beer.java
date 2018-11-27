@@ -5,59 +5,65 @@ import java.io.Serializable;
 public class Beer implements Serializable {
 
 
-    private String name;
-
-    private String style;
-
-    private String category;
-
-    private String brewer;
-
-    private String abv; //alcohol by volume
-
-
-    Beer(){
-
-    }
+    String name;
+    String id;
+    String brewery_id;
+    String cat_id;
+    String alcohol;
+    String categorie;
+    String brewer;
+    String address;
+    String city;
+    String state;
+    String country;
+    String coordinates;
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getId() {
+        return id;
     }
 
-    public String getStyle() {
-        return style;
+    public String getBrewery_id() {
+        return brewery_id;
     }
 
-    public void setStyle(String style) {
-        this.style = style;
+    public String getCat_id() {
+        return cat_id;
     }
 
-    public String getCategory() {
-        return category;
+    public String getAlcohol() {
+        return alcohol;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public String getCategorie() {
+        return categorie;
     }
 
-   public String getBrewer() {
+    public String getBrewer() {
         return brewer;
     }
 
-    public void setBrewer(String brewer) {
-        this.brewer = brewer;
+    public String getAddress() {
+        return address;
     }
 
-    public String getAbv() {
-        return abv;
+    public String getCity() {
+        return city;
     }
 
-    public void setAbv(String abv) {
-        this.abv = abv;
+    public String getState() {
+        return state;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public String getCoordinates() {
+        return coordinates;
     }
 
 
