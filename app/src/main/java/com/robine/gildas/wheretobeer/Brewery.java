@@ -1,10 +1,12 @@
 package com.robine.gildas.wheretobeer;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.database.PropertyName;
+import com.google.maps.android.clustering.ClusterItem;
 
 import java.io.Serializable;
 
-public class Brewery implements Serializable {
+public class Brewery implements Serializable, ClusterItem {
 
     String brewery_id;
     @PropertyName("Brewer")
@@ -80,4 +82,19 @@ public class Brewery implements Serializable {
         this.coordinates = coordinates;
     }
 
+    @Override
+    public LatLng getPosition() {
+        String[] sepLatLng = coordinates.split(",");
+        return new LatLng(Double.valueOf(sepLatLng[0]), Double.valueOf(sepLatLng[1]));
+    }
+
+    @Override
+    public String getTitle() {
+        return brewer;
+    }
+
+    @Override
+    public String getSnippet() {
+        return address;
+    }
 }
