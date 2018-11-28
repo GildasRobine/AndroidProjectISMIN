@@ -16,6 +16,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -43,11 +44,12 @@ public class MainActivity extends AppCompatActivity implements  TabLayout.OnTabS
         breweryRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot brewerySnapShot: dataSnapshot.getChildren()){
-                    Brewery brewery = brewerySnapShot.getValue(Brewery.class);
-                    breweriesAL.add(brewery);
-                }
-
+                GenericTypeIndicator<ArrayList<Brewery>> breweryListtype = new GenericTypeIndicator<ArrayList<Brewery>>() {};
+                breweriesAL = (ArrayList<Brewery>) dataSnapshot.getValue(breweryListtype);
+                System.out.println("Firebase OK : "+ breweriesAL.size());
+                initLayout();
+                Toast toast = Toast.makeText(getApplicationContext(),breweriesAL.size()+"",Toast.LENGTH_LONG);
+                toast.show();
             }
 
             @Override
@@ -59,14 +61,17 @@ public class MainActivity extends AppCompatActivity implements  TabLayout.OnTabS
 
             }
         });
-       // Toast.makeText(this,breweriesAL.size(),Toast.LENGTH_LONG).show();
 
 
+
+
+
+    }
+
+    public void initLayout(){
         //Ajouter la toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
 
 
         //Init tabLayout
@@ -81,12 +86,12 @@ public class MainActivity extends AppCompatActivity implements  TabLayout.OnTabS
         //Init ViewPager
         viewPager = (ViewPager) findViewById(R.id.pager);
         //Create and setting pager adapter
-        statePagerAdapterFrag = new StatePagerAdapterFrag(getSupportFragmentManager(),tabLayout.getTabCount());
+        statePagerAdapterFrag = new StatePagerAdapterFrag(getSupportFragmentManager(),tabLayout.getTabCount(), breweriesAL);
         viewPager.setAdapter(statePagerAdapterFrag);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(this);
-
     }
+
 
     @Override
     public void onTabSelected(TabLayout.Tab tab) {

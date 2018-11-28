@@ -1,16 +1,28 @@
 package com.robine.gildas.wheretobeer;
 
+import com.google.firebase.database.PropertyName;
+
 import java.io.Serializable;
 
 public class Brewery implements Serializable {
 
-    String id;
+    String brewery_id;
+    @PropertyName("Brewer")
     String brewer;
+    @PropertyName("Address")
     String address;
+    @PropertyName("City")
     String city;
+    @PropertyName("State")
     String state;
+    @PropertyName("Country")
     String country;
+    @PropertyName("Coordinates")
     String coordinates;
+
+    public Brewery(){
+
+    }
 
     public String getBrewer() {
         return brewer;
@@ -21,11 +33,11 @@ public class Brewery implements Serializable {
     }
 
     public String getId() {
-        return id;
+        return brewery_id;
     }
 
     public void setId(String id) {
-        this.id = id;
+        this.brewery_id = id;
     }
 
     public String getAddress() {
