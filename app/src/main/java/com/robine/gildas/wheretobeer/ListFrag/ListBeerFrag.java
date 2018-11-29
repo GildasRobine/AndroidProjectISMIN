@@ -66,11 +66,42 @@ public class ListBeerFrag extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        beerDatabase.limitToFirst(100).addChildEventListener(new ChildEventListener() {
+        loadBeers(5); //On charge les 100 bières
+
+
+        // Inflate the layout for this fragment
+
+
+        View rootView = inflater.inflate(R.layout.fragment_frag_obj1, container, false);
+
+
+
+
+        recyclerView = rootView.findViewById(R.id.recyclerView);
+        LinearLayoutManager linearLayoutManagerManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(linearLayoutManagerManager);
+        listBeerAdapter = new ListBeerAdapter(beers) ;
+        listBeerAdapter.notifyDataSetChanged();
+        recyclerView.setAdapter(listBeerAdapter);
+
+
+
+
+        return  rootView;
+
+
+        //return inflater.inflate(R.layout.fragment_frag_obj1, container, false);
+    }
+
+
+    public void loadBeers(int taille){
+
+        beerDatabase.limitToFirst(taille).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
                 Beer newBeer = dataSnapshot.getValue(Beer.class);
                 beers.add(newBeer);
+                System.out.println("Nombre de ");
                 /*System.out.println("Beer Name: " + newBeer.getName());
                 System.out.println("Brewer Name: " + newBeer.getBrewer());*/
             }
@@ -87,27 +118,5 @@ public class ListBeerFrag extends Fragment {
             @Override
             public void onCancelled(DatabaseError databaseError) {}
         });
-        // Inflate the layout for this fragment
-
-
-        /*View rootView = inflater.inflate(R.layout.fragment_frag_obj1, container, false);
-
-
-
-
-        recyclerView = rootView.findViewById(R.id.recyclerView);
-        LinearLayoutManager linearLayoutManagerManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(linearLayoutManagerManager);
-        listBeerAdapter = new ListBeerAdapter(beers) ;
-        listBeerAdapter.notifyDataSetChanged();
-        recyclerView.setAdapter(listBeerAdapter);
-
-
-
-
-        return  rootView;*/
-
-
-        return inflater.inflate(R.layout.fragment_frag_obj1, container, false);
     }
 }

@@ -22,7 +22,7 @@ public class ListBeerAdapter extends RecyclerView.Adapter<ListBeerViewHolder> {
     @NonNull
     @Override
     public ListBeerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View row = LayoutInflater.from(parent.getContext()).inflate(R.layout.listicon,parent,false);
+        View row = LayoutInflater.from(parent.getContext()).inflate(R.layout.listbeer_row,parent,false);
 
         return new ListBeerViewHolder(row);
     }
@@ -30,6 +30,10 @@ public class ListBeerAdapter extends RecyclerView.Adapter<ListBeerViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ListBeerViewHolder holder, int position) {
         Beer beerToDisplay = this.beers.get(position);
+        String snippet = beerToDisplay.getAlcohol()+"%, " + beerToDisplay.getAddress();
+        holder.subtitle.setText(snippet);
+        holder.title.setText(beerToDisplay.getName());
+        System.out.println("Row OK");
 
     }
 
