@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DetailsBeerFrag">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <TextView
+        android:id="@+id/beerName"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:contentDescription="Beer Name"
+        android:fontFamily="sans-serif"
+        android:text="Beer Name"
+        android:textAlignment="viewStart"
+        android:textAllCaps="false"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline1"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="141dp"
+        android:layout_height="0dp"
+        android:src="@drawable/beerimage"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/brewerybeer"
+        app:layout_constraintVertical_bias="0.294" />
+
+    <TextView
+        android:id="@+id/brewerybeer"
+        android:layout_width="287dp"
+        android:layout_height="39dp"
+        android:text="Brewery"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/beerName" />
+
+    <TextView
+        android:id="@+id/categorybeer"
+        android:layout_width="0dp"
+        android:layout_height="54dp"
+        android:text="Category"
+        app:layout_constraintBottom_toTopOf="@+id/abvdetails"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/imageView2"
+        app:layout_constraintTop_toBottomOf="@+id/brewerybeer" />
+
+    <TextView
+        android:id="@+id/abvdetails"
+        android:layout_width="0dp"
+        android:layout_height="36dp"
+        android:text="abv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView2"
+        app:layout_constraintTop_toBottomOf="@+id/categorybeer" />
+
+    <TextView
+        android:id="@+id/breweraddress"
+        android:layout_width="0dp"
+        android:layout_height="64dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView2"
+        app:layout_constraintTop_toBottomOf="@+id/abvdetails" />
+
+</android.support.constraint.ConstraintLayout>

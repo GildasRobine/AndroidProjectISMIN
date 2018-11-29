@@ -85,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements  TabLayout.OnTabS
 
         //Init ViewPager
         viewPager = (ViewPager) findViewById(R.id.pager);
+        viewPager.setOffscreenPageLimit(1);
         //Create and setting pager adapter
         statePagerAdapterFrag = new StatePagerAdapterFrag(getSupportFragmentManager(),tabLayout.getTabCount(), breweriesAL);
         viewPager.setAdapter(statePagerAdapterFrag);

@@ -66,23 +66,26 @@ public class ListBeerFrag extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        loadBeers(5); //On charge les 100 bières
+        View rootView = inflater.inflate(R.layout.fragment_frag_obj1, container, false);
+        recyclerView = rootView.findViewById(R.id.recyclerView);
+        //recyclerView.addOnItemTouchListener();
+        LinearLayoutManager linearLayoutManagerManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(linearLayoutManagerManager);
+
+
+        loadBeers(100); //On charge les 100 bières
 
 
         // Inflate the layout for this fragment
 
 
-        View rootView = inflater.inflate(R.layout.fragment_frag_obj1, container, false);
 
 
 
 
-        recyclerView = rootView.findViewById(R.id.recyclerView);
-        LinearLayoutManager linearLayoutManagerManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(linearLayoutManagerManager);
-        listBeerAdapter = new ListBeerAdapter(beers) ;
-        listBeerAdapter.notifyDataSetChanged();
-        recyclerView.setAdapter(listBeerAdapter);
+
+
+
 
 
 
@@ -92,7 +95,11 @@ public class ListBeerFrag extends Fragment {
 
         //return inflater.inflate(R.layout.fragment_frag_obj1, container, false);
     }
-
+    public void loadList(){
+        listBeerAdapter = new ListBeerAdapter(beers) ;
+        listBeerAdapter.notifyDataSetChanged();
+        recyclerView.setAdapter(listBeerAdapter);
+    }
 
     public void loadBeers(int taille){
 
@@ -102,8 +109,9 @@ public class ListBeerFrag extends Fragment {
                 Beer newBeer = dataSnapshot.getValue(Beer.class);
                 beers.add(newBeer);
                 System.out.println("Nombre de ");
-                /*System.out.println("Beer Name: " + newBeer.getName());
-                System.out.println("Brewer Name: " + newBeer.getBrewer());*/
+                System.out.println("Beer Name: " + newBeer.getName());
+                System.out.println("Brewer Name: " + newBeer.getBrewer());
+                loadList();
             }
 
             @Override

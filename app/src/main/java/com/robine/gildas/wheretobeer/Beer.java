@@ -1,14 +1,9 @@
 package com.robine.gildas.wheretobeer;
 
-import android.arch.persistence.room.Database;
-
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.PropertyName;
 
 
 import java.io.Serializable;
-import java.util.HashMap;
 
 public class Beer implements Serializable{
     public String getName() {
@@ -39,16 +34,16 @@ public class Beer implements Serializable{
         return alcohol;
     }
 
-    public void setAlcohol(Long alcohol) {
+    /*public void setAlcohol(Long alcohol) {
         this.alcohol = alcohol;
+    }*/
+
+    public String getCategory() {
+        return category;
     }
 
-    public String getCategorie() {
-        return categorie;
-    }
-
-    public void setCategorie(String categorie) {
-        this.categorie = categorie;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public Long getBrewery_id() {
@@ -114,9 +109,9 @@ public class Beer implements Serializable{
     @PropertyName("cat_id")
     private Long cat_id;
     @PropertyName("Alcohol By Volume")
-    Long alcohol;
+    public Long alcohol;
     @PropertyName("Category")
-    private String categorie;
+    private String category;
     @PropertyName("brewery_id")
     private Long brewery_id;
     @PropertyName("Brewer")
@@ -134,11 +129,11 @@ public class Beer implements Serializable{
 
     public Beer(){}
 
-    Beer(String beerName, String brewName, String brewAdress, Long alRate){
+    Beer(String beerName, String brewName, String brewAdress, Long alcohol){
         name = beerName;
         brewer = brewName;
         address = brewAdress;
-        alcohol = alRate;
+        alcohol = alcohol;
     }
 
 
