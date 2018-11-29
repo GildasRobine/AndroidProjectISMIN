@@ -6,11 +6,15 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.robine.gildas.wheretobeer.ListFrag.ListBeerFrag;
 
+import java.util.ArrayList;
+
 public class StatePagerAdapterFrag extends FragmentStatePagerAdapter {
     int mNumOfTabs;
-    public StatePagerAdapterFrag(FragmentManager fm, int numOfTabs) {
+    ArrayList<Brewery> breweries;
+    public StatePagerAdapterFrag(FragmentManager fm, int numOfTabs, ArrayList<Brewery> breweries) {
         super(fm);
         this.mNumOfTabs = numOfTabs;
+        this.breweries = breweries;
     }
 
     @Override
@@ -20,7 +24,7 @@ public class StatePagerAdapterFrag extends FragmentStatePagerAdapter {
                 ListBeerFrag listBeerFrag = new ListBeerFrag();
                 return listBeerFrag;
             case 1 :
-                MapsFragment mapsFragment = new MapsFragment();
+                MapsFragment mapsFragment = MapsFragment.newInstance(breweries);
                 return mapsFragment;
             case 2 :
                 DetailsInfoFrag detailsInfoFrag = new DetailsInfoFrag();

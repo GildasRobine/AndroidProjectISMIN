@@ -1,10 +1,14 @@
 package com.robine.gildas.wheretobeer;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -14,13 +18,40 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.maps.android.clustering.ClusterManager;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MapsFragment extends Fragment {
-
+    CameraPosition cameraPosition;
     MapView mMapView;
     private GoogleMap googleMap;
+    ArrayList<Brewery> breweries;
+    private static final String ARG_PARAM1 ="breweries";
+    private ClusterManager<Brewery> breweryClusterManager;
 
     //Override method onCreateView
+    public static MapsFragment newInstance(ArrayList<Brewery> breweries) {
+
+        Bundle args = new Bundle();
+        args.putSerializable("breweries",breweries);
+        MapsFragment fragment = new MapsFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+        @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            Serializable s = getArguments().getSerializable(ARG_PARAM1);
+            breweries = (ArrayList<Brewery>) s ;
+            System.out.println("Maps instantiate, number of breweries : " + breweries.size());
+        }
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -28,7 +59,7 @@ public class MapsFragment extends Fragment {
 
         mMapView = (MapView) rootView.findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
-
+        System.out.println("Maps instantiate, number of breweries : " + breweries.size());
         mMapView.onResume();
 
         try{
@@ -41,14 +72,45 @@ public class MapsFragment extends Fragment {
             @Override
             public void onMapReady(GoogleMap mMap) {
                 googleMap = mMap;
+                setUpClusterer();
+                breweryClusterManager.cluster();
+
+
+
+                //Marker par défaut
+
+               /* LatLng aix = new LatLng(43.529742, 5.447427 );
+                googleMap.addMarker(new MarkerOptions().position(aix).title("Aix en Provence").snippet("Il y fait beau (mais pas tout le temps"));
+
 
                 // For dropping a marker at a point on the Map
-                LatLng aix = new LatLng(43.529742, 5.447427 );
-                googleMap.addMarker(new MarkerOptions().position(aix).title("Marker Title").snippet("Marker Description"));
+                if (breweries.size() !=0) {
+
+                    for (Brewery brewery : breweries) {
+                        String coordinates = brewery.coordinates;
+
+                        if (coordinates != null) {
+                            String[] sepLatLng = brewery.coordinates.split(",");
+                            LatLng breweryLatLng = new LatLng(Double.valueOf(sepLatLng[0]), Double.valueOf(sepLatLng[1]));
+                            MarkerOptions breweryMarker = new MarkerOptions().position(breweryLatLng).title(brewery.brewer).snippet(brewery.address + ", " + brewery.city);
+                            googleMap.addMarker(breweryMarker);
+                        }
+                    }
+
+                }
+
+               // permissions
+                if  (ActivityCompat.checkSelfPermission(getContext(),
+                        android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                        ActivityCompat.checkSelfPermission(getContext(),
+                                android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    return;
+                }
+                mMap.setMyLocationEnabled(true);
 
                 // For zooming automatically to the location of the marker
-                CameraPosition cameraPosition = new CameraPosition.Builder().target(aix).zoom(12).build();
-                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                cameraPosition = new CameraPosition.Builder().target(aix).zoom(8).build();
+                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition)); */
             }
         });
 
@@ -80,4 +142,26 @@ public class MapsFragment extends Fragment {
         super.onLowMemory();
         mMapView.onLowMemory();
     }
+
+    private void setUpClusterer() {
+        // Position the map.
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(43.529742, 5.447427), 10));
+
+        // Initialize the manager with the context and the map.
+        // (Activity extends context, so we can pass 'this' in the constructor.)
+        breweryClusterManager = new ClusterManager<Brewery>(getContext(), googleMap);
+
+        // Point the map's listeners at the listeners implemented by the cluster
+        // manager.
+        googleMap.setOnCameraIdleListener(breweryClusterManager);
+        googleMap.setOnMarkerClickListener(breweryClusterManager);
+        googleMap.setOnInfoWindowClickListener(breweryClusterManager);
+        // Add cluster items (markers) to the cluster manager.
+        addItems();
+    }
+
+    private void addItems() {
+        breweryClusterManager.addItems(breweries);
+    }
+
 }
