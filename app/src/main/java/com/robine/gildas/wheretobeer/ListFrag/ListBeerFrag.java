@@ -9,6 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.robine.gildas.wheretobeer.Beer;
 import com.robine.gildas.wheretobeer.R;
 
@@ -24,10 +30,11 @@ public class ListBeerFrag extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private ArrayList<Beer> beers;
+    private ArrayList<Beer> beers = new ArrayList<>();
     private RecyclerView recyclerView;
     private ListBeerAdapter listBeerAdapter;
     private ImageView cellarImg;
+    private DatabaseReference beerDatabase = FirebaseDatabase.getInstance().getReference("Beers");
 
     public ListBeerFrag() {
         // Required empty public constructor
@@ -55,9 +62,31 @@ public class ListBeerFrag extends Fragment {
 
 
     //Overriden method onCreateView
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        beerDatabase.limitToFirst(100).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
+                Beer newBeer = dataSnapshot.getValue(Beer.class);
+                beers.add(newBeer);
+                /*System.out.println("Beer Name: " + newBeer.getName());
+                System.out.println("Brewer Name: " + newBeer.getBrewer());*/
+            }
 
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {}
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {}
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {}
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
         // Inflate the layout for this fragment
 
 
