@@ -36,8 +36,8 @@ public class DetailsInfoFrag extends Fragment {
                 String beerNa = beerName.getText().toString();
                 String brewNa = brewName.getText().toString();
                 String brewAd = brewAdress.getText().toString();
-                String rate = alRate.getText().toString();
-                beers.put("test", new Beer(beerNa,brewNa,brewAd,rate));
+                Long rate = Long.valueOf(alRate.getText().toString());
+                beers.put("999999", new Beer(beerNa,brewNa,brewAd,rate));
                 beerName.getText().clear();
                 brewName.getText().clear();
                 brewAdress.getText().clear();

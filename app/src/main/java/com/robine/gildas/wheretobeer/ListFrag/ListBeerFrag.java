@@ -30,7 +30,7 @@ public class ListBeerFrag extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private ArrayList<Beer> beers;
+    private ArrayList<Beer> beers = new ArrayList<>();
     private RecyclerView recyclerView;
     private ListBeerAdapter listBeerAdapter;
     private ImageView cellarImg;
@@ -71,9 +71,8 @@ public class ListBeerFrag extends Fragment {
             public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
                 Beer newBeer = dataSnapshot.getValue(Beer.class);
                 beers.add(newBeer);
-                System.out.println("Beer Name: " + newBeer.getName());
-                System.out.println("Brewer Name: " + newBeer.getBrewer());
-                System.out.println("Brewer Address " + newBeer.getAddress());
+                /*System.out.println("Beer Name: " + newBeer.getName());
+                System.out.println("Brewer Name: " + newBeer.getBrewer());*/
             }
 
             @Override

@@ -30,7 +30,7 @@ public class ListBeerAdapter extends RecyclerView.Adapter<ListBeerViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ListBeerViewHolder holder, int position) {
         Beer beerToDisplay = this.beers.get(position);
-        holder.txtName.setText(beerToDisplay.getName());
+
     }
 
     @Override

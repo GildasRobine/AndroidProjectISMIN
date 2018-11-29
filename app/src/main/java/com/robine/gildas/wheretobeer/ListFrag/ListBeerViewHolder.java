@@ -9,11 +9,11 @@ import com.robine.gildas.wheretobeer.R;
 
 public class ListBeerViewHolder extends RecyclerView.ViewHolder {
 
-    public TextView txtName;
-    public TextView txtPrice;
+    public TextView beerName;
+    public TextView alRate;
     public ListBeerViewHolder(View itemView) {
         super(itemView);
-        this.txtName = itemView.findViewById(R.id.txtNameList);
-        this.txtPrice = itemView.findViewById(R.id.textPriceList);
+        this.beerName = itemView.findViewById(R.id.list_beer);
+        this.alRate = itemView.findViewById(R.id.list_alRate);
     }
 }
