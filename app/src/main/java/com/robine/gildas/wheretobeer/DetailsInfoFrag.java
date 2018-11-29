@@ -37,7 +37,10 @@ public class DetailsInfoFrag extends Fragment {
                 String brewNa = brewName.getText().toString();
                 String brewAd = brewAdress.getText().toString();
                 Long rate = Long.valueOf(alRate.getText().toString());
-                beers.put("999999", new Beer(beerNa,brewNa,brewAd,rate));
+                DatabaseReference newRef = beerDatabase.push();
+                newRef.setValue( new Beer(beerNa,brewNa,brewAd,rate));
+                String postId = newRef.getKey();
+                System.out.println(postId);
                 beerName.getText().clear();
                 brewName.getText().clear();
                 brewAdress.getText().clear();
