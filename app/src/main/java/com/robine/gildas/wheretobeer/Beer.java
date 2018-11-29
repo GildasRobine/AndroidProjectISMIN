@@ -1,10 +1,15 @@
 package com.robine.gildas.wheretobeer;
 
+import android.arch.persistence.room.Database;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+
 import java.io.Serializable;
+import java.util.HashMap;
 
-public class Beer implements Serializable {
-
-
+public class Beer {
     String name;
     String id;
     String brewery_id;
@@ -17,6 +22,15 @@ public class Beer implements Serializable {
     String state;
     String country;
     String coordinates;
+
+    Beer(String beerName, String brewName, String brewAdress, String alRate){
+        name = beerName;
+        brewer = brewName;
+        address = brewAdress;
+        alcohol = alRate;
+    }
+
+
 
     public String getName() {
         return name;
@@ -66,5 +80,5 @@ public class Beer implements Serializable {
         return coordinates;
     }
 
-
 }
+

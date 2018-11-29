@@ -10,6 +10,9 @@ import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.support.v7.widget.Toolbar;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class MainActivity extends AppCompatActivity implements  TabLayout.OnTabSelectedListener{
     private TabLayout tabLayout;
     private StatePagerAdapterFrag statePagerAdapterFrag;
@@ -19,6 +22,8 @@ public class MainActivity extends AppCompatActivity implements  TabLayout.OnTabS
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
 
         //Ajouter la toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -31,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements  TabLayout.OnTabS
         //Ajout des onglets
         tabLayout.addTab(createTab("List",getDrawable(R.drawable.ic_cheers)));
         tabLayout.addTab(createTab("Map",getDrawable(R.drawable.ic_beerplace)));
-        tabLayout.addTab(createTab("Details", getDrawable(R.drawable.ic_information)));
+        tabLayout.addTab(createTab("Add Beer", getDrawable(R.drawable.ic_information)));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         //Init ViewPager
