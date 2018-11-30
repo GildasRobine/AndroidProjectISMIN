@@ -2,26 +2,25 @@ package com.robine.gildas.wheretobeer.ListFrag;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 import com.robine.gildas.wheretobeer.Beer;
 import com.robine.gildas.wheretobeer.DetailsActivity;
 import com.robine.gildas.wheretobeer.R;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 
@@ -36,36 +35,12 @@ public class ListBeerFrag extends Fragment {
     private ArrayList<Beer> beers = new ArrayList<>();
     private RecyclerView recyclerView;
     private ListBeerAdapter listBeerAdapter;
-    private ImageView cellarImg;
     private DatabaseReference beerDatabase = FirebaseDatabase.getInstance().getReference("Beers");
-
+    private int taille;
+    private int currentPos;
     public ListBeerFrag() {
         // Required empty public constructor
     }
-
-    // TODO: Rename and change types and number of parameters
-    /*public static ListBeerFrag newInstance(String param1, String param2) {
-        ListBeerFrag fragment = new ListBeerFrag();
-        Bundle args = new Bundle();
-        args.putSerializable(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }*/
-
-    /*@Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            Serializable s = getArguments().getSerializable(ARG_PARAM1);
-            beers = (ArrayList<Beer>) s ;
-        }
-    }*/
-
-
-
-    //Overriden method onCreateView
-
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -73,30 +48,24 @@ public class ListBeerFrag extends Fragment {
         recyclerView = rootView.findViewById(R.id.recyclerView);
         LinearLayoutManager linearLayoutManagerManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManagerManager);
+        taille = 20;
+        currentPos = 0;
+        recyclerView.addOnScrollListener(new EndlessRecyclerViewScrollListener(linearLayoutManagerManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                taille += 20;
+                currentPos +=20;
+                loadBeers(taille);
+
+            }
+        });
 
 
-        loadBeers(100); //On charge les 100 bières
+        loadBeers(taille); //On charge les taille premières bières
         this.configureOnClickRV();
-
-        // Inflate the layout for this fragment
-
-
-
-
-
-
-
-
-
-
-
-
-
         return  rootView;
-
-
-        //return inflater.inflate(R.layout.fragment_frag_obj1, container, false);
     }
+
     public void loadList(){
         listBeerAdapter = new ListBeerAdapter(beers, new OnItemClickListener() {
             @Override
@@ -109,33 +78,28 @@ public class ListBeerFrag extends Fragment {
 
         listBeerAdapter.notifyDataSetChanged();
         recyclerView.setAdapter(listBeerAdapter);
+        recyclerView.scrollToPosition(currentPos);
+
     }
 
     public void loadBeers(int taille){
 
-        beerDatabase.limitToFirst(taille).addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
-                Beer newBeer = dataSnapshot.getValue(Beer.class);
-                beers.add(newBeer);
-                System.out.println("Nombre de ");
-                System.out.println("Beer Name: " + newBeer.getName());
-                System.out.println("Brewer Name: " + newBeer.getBrewer());
-                loadList();
-            }
+        beerDatabase.limitToFirst(taille).
+                addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot){
+                        GenericTypeIndicator<ArrayList<Beer>> beerListtype = new GenericTypeIndicator<ArrayList<Beer>>() {};
 
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {}
+                        beers = (ArrayList<Beer>) dataSnapshot.getValue(beerListtype);
+                        loadList();
+                    }
 
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {}
 
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {}
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {}
-        });
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }});
     }
 
     private void configureOnClickRV(){
@@ -151,6 +115,6 @@ public class ListBeerFrag extends Fragment {
                 });
     }
 
-    
+
 
 }
