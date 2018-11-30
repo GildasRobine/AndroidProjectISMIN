@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -36,15 +37,20 @@ public class AddBeerFrag extends Fragment {
                 String beerNa = beerName.getText().toString();
                 String brewNa = brewName.getText().toString();
                 String brewAd = brewAdress.getText().toString();
-                Long rate = Long.valueOf(alRate.getText().toString());
-                DatabaseReference newRef = beerDatabase.push();
-                newRef.setValue( new Beer(beerNa,brewNa,brewAd,rate));
-                String postId = newRef.getKey();
-                System.out.println(postId);
-                beerName.getText().clear();
-                brewName.getText().clear();
-                brewAdress.getText().clear();
-                alRate.getText().clear();
+                String rateString = alRate.getText().toString();
+                if (beerNa.isEmpty()||brewNa.isEmpty()||brewAd.isEmpty()||rateString.isEmpty()) {
+                    Toast.makeText(getContext(),"Fill all the fields please",Toast.LENGTH_LONG).show();
+                }else {
+                    Long rate = Long.valueOf(rateString);
+                    DatabaseReference newRef = beerDatabase.push();
+                    newRef.setValue(new Beer(beerNa, brewNa, brewAd, rate));
+                    String postId = newRef.getKey();
+                    System.out.println(postId);
+                    beerName.getText().clear();
+                    brewName.getText().clear();
+                    brewAdress.getText().clear();
+                    alRate.getText().clear();
+                }
 
             }
         });
