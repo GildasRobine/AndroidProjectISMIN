@@ -1,5 +1,6 @@
 package com.robine.gildas.wheretobeer.ListFrag;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -16,6 +18,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.robine.gildas.wheretobeer.Beer;
+import com.robine.gildas.wheretobeer.DetailsActivity;
 import com.robine.gildas.wheretobeer.R;
 
 import java.io.Serializable;
@@ -65,16 +68,15 @@ public class ListBeerFrag extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_frag_obj1, container, false);
         recyclerView = rootView.findViewById(R.id.recyclerView);
-        //recyclerView.addOnItemTouchListener();
         LinearLayoutManager linearLayoutManagerManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManagerManager);
 
 
         loadBeers(100); //On charge les 100 bières
-
+        this.configureOnClickRV();
 
         // Inflate the layout for this fragment
 
@@ -96,7 +98,15 @@ public class ListBeerFrag extends Fragment {
         //return inflater.inflate(R.layout.fragment_frag_obj1, container, false);
     }
     public void loadList(){
-        listBeerAdapter = new ListBeerAdapter(beers) ;
+        listBeerAdapter = new ListBeerAdapter(beers, new OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent intent = new Intent(getActivity(),DetailsActivity.class);
+                intent.putExtra("beer",beers.get(position));
+                startActivity(intent);
+            }
+        }) ;
+
         listBeerAdapter.notifyDataSetChanged();
         recyclerView.setAdapter(listBeerAdapter);
     }
@@ -127,4 +137,18 @@ public class ListBeerFrag extends Fragment {
             public void onCancelled(DatabaseError databaseError) {}
         });
     }
+
+    private void configureOnClickRV(){
+        ItemClickSupport.addTo(recyclerView, R.layout.listbeer_row)
+                .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+                    @Override
+                    public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                        Toast.makeText(getContext(), "Position :" + position, Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getActivity(), DetailsActivity.class);
+                        intent.putExtra("beer",beers.get(position));
+                        startActivity(intent);
+                    }
+                });
+    }
+
 }

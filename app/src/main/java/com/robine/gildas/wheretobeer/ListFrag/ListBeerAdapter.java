@@ -14,8 +14,12 @@ import java.util.ArrayList;
 public class ListBeerAdapter extends RecyclerView.Adapter<ListBeerViewHolder> {
 
     private ArrayList<Beer> beers;
+    OnItemClickListener listener;
 
-    public ListBeerAdapter (ArrayList<Beer> beers){this.beers = beers ;};
+    public ListBeerAdapter (ArrayList<Beer> beers, OnItemClickListener listener){
+        this.beers = beers ;
+        this.listener = listener;
+    }
 
 
 
@@ -46,6 +50,7 @@ public class ListBeerAdapter extends RecyclerView.Adapter<ListBeerViewHolder> {
         String snippet = abv + ", " + category + ", " + brewery +".";
         holder.subtitle.setText(snippet);
         holder.title.setText(beerToDisplay.getName());
+
         System.out.println("Row OK");
 
     }

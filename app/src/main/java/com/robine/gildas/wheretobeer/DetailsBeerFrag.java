@@ -1,18 +1,23 @@
 package com.robine.gildas.wheretobeer;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.Toast;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link DetailsBeerFrag.OnFragmentInteractionListener} interface
+ * {@link MapsInterface} interface
  * to handle interaction events.
  * Use the {@link DetailsBeerFrag#newInstance} factory method to
  * create an instance of this fragment.
@@ -24,8 +29,15 @@ public class DetailsBeerFrag extends Fragment {
 
     // TODO: Rename and change types of parameters
     private Beer beer;
+    private TextView beerName;
+    private TextView breweryName;
+    private TextView category;
+    private TextView abv;
+    private TextView brewerInfo;
+    private ImageButton toMapButton;
 
-    private OnFragmentInteractionListener mListener;
+
+    private MapsInterface mListener;
 
     public DetailsBeerFrag() {
         // Required empty public constructor
@@ -35,15 +47,14 @@ public class DetailsBeerFrag extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
+     * @param beer Beer.
      * @return A new instance of fragment DetailsBeerFrag.
      */
     // TODO: Rename and change types and number of parameters
-    public static DetailsBeerFrag newInstance(String param1, String param2) {
+    public static DetailsBeerFrag newInstance(Beer beer) {
         DetailsBeerFrag fragment = new DetailsBeerFrag();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
+        args.putSerializable(ARG_PARAM1, beer);
         fragment.setArguments(args);
         return fragment;
     }
@@ -53,6 +64,7 @@ public class DetailsBeerFrag extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             beer = (Beer) getArguments().getSerializable(ARG_PARAM1);
+
         }
     }
 
@@ -60,26 +72,53 @@ public class DetailsBeerFrag extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_details_beer, container, false);
-    }
+        View rootView = inflater.inflate(R.layout.fragment_details_beer, container, false);
+        beerName = rootView.findViewById(R.id.beerName);
+        breweryName = rootView.findViewById(R.id.brewerybeer);
+        category = rootView.findViewById(R.id.categorybeer);
+        abv = rootView.findViewById(R.id.abvdetails);
+        brewerInfo = rootView.findViewById(R.id.brewerinfo);
+        toMapButton = (ImageButton) rootView.findViewById(R.id.imageButton);
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+        if (beer != null){
+            beerName.setText(beer.getName());
+            breweryName.setText(beer.getBrewer());
+            category.setText(beer.getCategory());
+            abv.setText(beer.getAlcohol()+"%");
+            String brewerInfoStr = "On peut trouver la brasserie " + beer.getBrewer() + " à l'adresse "
+                    + beer.getAddress() + ", "
+                    + beer.getCity() + ", "
+                    +beer.getCountry() +".";
+            brewerInfo.setText(brewerInfoStr);
+            toMapButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent  intent = new Intent(getActivity(), MainActivity.class);
+                    intent.putExtra("beer", beer);
+                    startActivity(intent);
+                }
+            });
+        }else{
+            Toast.makeText(getContext(),"Beer is null !",Toast.LENGTH_LONG).show();
         }
+
+
+
+        return rootView;
     }
 
-    @Override
+
+
+   /* @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+        if (context instanceof MapsInterface) {
+            mListener = (MapsInterface) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
-    }
+    }*/
 
     @Override
     public void onDetach() {
@@ -97,8 +136,5 @@ public class DetailsBeerFrag extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
+
 }
