@@ -9,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -107,7 +106,6 @@ public class ListBeerFrag extends Fragment {
                 .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
                     @Override
                     public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                        Toast.makeText(getContext(), "Position :" + position, Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(getActivity(), DetailsActivity.class);
                         intent.putExtra("beer",beers.get(position));
                         startActivity(intent);

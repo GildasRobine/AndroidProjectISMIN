@@ -27,7 +27,6 @@ public class ListBeerAdapter extends RecyclerView.Adapter<ListBeerViewHolder> {
     @Override
     public ListBeerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View row = LayoutInflater.from(parent.getContext()).inflate(R.layout.listbeer_row,parent,false);
-        System.out.println("Nb bières : " +beers.size());
         return new ListBeerViewHolder(row);
     }
 
@@ -51,7 +50,6 @@ public class ListBeerAdapter extends RecyclerView.Adapter<ListBeerViewHolder> {
         holder.subtitle.setText(snippet);
         holder.title.setText(beerToDisplay.getName());
 
-        System.out.println("Row OK");
 
     }
 

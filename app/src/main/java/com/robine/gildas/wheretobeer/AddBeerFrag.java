@@ -45,7 +45,6 @@ public class AddBeerFrag extends Fragment {
                     DatabaseReference newRef = beerDatabase.push();
                     newRef.setValue(new Beer(beerNa, brewNa, brewAd, rate));
                     String postId = newRef.getKey();
-                    System.out.println(postId);
                     beerName.getText().clear();
                     brewName.getText().clear();
                     brewAdress.getText().clear();

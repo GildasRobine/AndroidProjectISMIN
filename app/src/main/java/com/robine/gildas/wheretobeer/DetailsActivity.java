@@ -29,7 +29,6 @@ public class DetailsActivity extends AppCompatActivity {
         DetailsBeerFrag detailsBeerFrag = DetailsBeerFrag.newInstance(beer);
         fragmentTransaction.replace(R.id.container,detailsBeerFrag);
         fragmentTransaction.commit();
-        System.out.println("Details Frag Committed");
     }
 
 

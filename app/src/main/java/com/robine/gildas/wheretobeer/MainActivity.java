@@ -14,11 +14,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TableLayout;
 import android.support.v7.widget.Toolbar;
 import android.app.SearchManager;
 import android.widget.SearchView;
-import android.widget.SearchView.OnQueryTextListener;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -68,7 +66,6 @@ public class MainActivity extends AppCompatActivity implements  TabLayout.OnTabS
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 GenericTypeIndicator<ArrayList<Brewery>> breweryListtype = new GenericTypeIndicator<ArrayList<Brewery>>() {};
                 breweriesAL = (ArrayList<Brewery>) dataSnapshot.getValue(breweryListtype);
-                System.out.println("Firebase OK : "+ breweriesAL.size());
                 Intent intent = getIntent();
                 String pos  ="0,0";
                 Beer beer = (Beer) intent.getSerializableExtra("beer");
@@ -158,27 +155,6 @@ public class MainActivity extends AppCompatActivity implements  TabLayout.OnTabS
         return tab;
     }
 
-    public void updateBreweryList(){
-        breweryRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot brewerySnapShot: dataSnapshot.getChildren()){
-                    Brewery brewery = brewerySnapShot.getValue(Brewery.class);
-                    breweriesAL.add(brewery);
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                System.out.println("Error in updateBreweryList : " + databaseError.getMessage());
-                 Toast toast = Toast.makeText(getApplicationContext(),"Error in updateBreweryList",Toast.LENGTH_LONG);
-                 toast.show();
-
-
-            }
-        });
-    }
 
     public void toMapsFrag(Beer beer){
         String coordinates = beer.getCoordinates();
