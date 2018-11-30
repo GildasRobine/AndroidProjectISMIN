@@ -92,7 +92,9 @@ public class MainActivity extends AppCompatActivity implements  TabLayout.OnTabS
         //Ajout des onglets
         tabLayout.addTab(createTab("List",getDrawable(R.drawable.ic_cheers)));
         tabLayout.addTab(createTab("Map",getDrawable(R.drawable.ic_beerplace)));
-        tabLayout.addTab(createTab("Add Beer", getDrawable(R.drawable.ic_information)));
+        tabLayout.addTab(createTab("Add Beer", getDrawable(R.drawable.ic_add)));
+        tabLayout.addTab(createTab("Info", getDrawable(R.drawable.ic_information)));
+
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         //Init ViewPager

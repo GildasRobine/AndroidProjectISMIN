@@ -14,7 +14,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DetailsInfoFrag extends Fragment {
+public class AddBeerFrag extends Fragment {
     private DatabaseReference beerDatabase = FirebaseDatabase.getInstance().getReference("Beers");
     Map<String, Beer> beers = new HashMap<>();
     //Overriden method onCreateView
