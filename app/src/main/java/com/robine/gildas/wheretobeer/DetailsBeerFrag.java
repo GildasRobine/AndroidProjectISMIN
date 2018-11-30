@@ -88,7 +88,8 @@ public class DetailsBeerFrag extends Fragment {
             String brewerInfoStr = "On peut trouver la brasserie " + beer.getBrewer() + " à l'adresse "
                     + beer.getAddress() + ", "
                     + beer.getCity() + ", "
-                    +beer.getCountry() +".";
+                    +beer.getCountry() +"."
+                    +"Coordinates :" +beer.getCoordinates();
             brewerInfo.setText(brewerInfoStr);
             toMapButton.setOnClickListener(new View.OnClickListener() {
                 @Override

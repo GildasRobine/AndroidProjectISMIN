@@ -11,10 +11,12 @@ import java.util.ArrayList;
 public class StatePagerAdapterFrag extends FragmentStatePagerAdapter {
     int mNumOfTabs;
     ArrayList<Brewery> breweries;
-    public StatePagerAdapterFrag(FragmentManager fm, int numOfTabs, ArrayList<Brewery> breweries) {
+    String camPOs;
+    public StatePagerAdapterFrag(FragmentManager fm, int numOfTabs, ArrayList<Brewery> breweries,String camPos) {
         super(fm);
         this.mNumOfTabs = numOfTabs;
         this.breweries = breweries;
+        this.camPOs = camPos;
     }
 
     @Override
@@ -24,7 +26,7 @@ public class StatePagerAdapterFrag extends FragmentStatePagerAdapter {
                 ListBeerFrag listBeerFrag = new ListBeerFrag();
                 return listBeerFrag;
             case 1 :
-                MapsFragment mapsFragment = MapsFragment.newInstance(breweries);
+                MapsFragment mapsFragment = MapsFragment.newInstance(breweries,camPOs);
                 return mapsFragment;
             case 2 :
                 DetailsInfoFrag detailsInfoFrag = new DetailsInfoFrag();

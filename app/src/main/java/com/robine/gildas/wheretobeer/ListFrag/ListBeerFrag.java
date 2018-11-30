@@ -151,4 +151,6 @@ public class ListBeerFrag extends Fragment {
                 });
     }
 
+    
+
 }

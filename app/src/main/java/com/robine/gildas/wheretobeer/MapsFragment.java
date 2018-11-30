@@ -17,6 +17,7 @@ import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.maps.android.clustering.ClusterManager;
 
@@ -38,7 +39,7 @@ public class MapsFragment extends Fragment {
     public static MapsFragment newInstance(ArrayList<Brewery> breweries) {
 
         Bundle args = new Bundle();
-        args.putSerializable("breweries",breweries);
+        args.putSerializable(ARG_PARAM1,breweries);
         args.putSerializable(ARG_PARAM2,"0,0");
         MapsFragment fragment = new MapsFragment();
         fragment.setArguments(args);
@@ -48,7 +49,7 @@ public class MapsFragment extends Fragment {
     public static MapsFragment newInstance(ArrayList<Brewery> breweries, String cameraPos) {
 
         Bundle args = new Bundle();
-        args.putSerializable(ARG_PARAM2,breweries);
+        args.putSerializable(ARG_PARAM1,breweries);
         args.putSerializable(ARG_PARAM2,cameraPos);
         MapsFragment fragment = new MapsFragment();
         fragment.setArguments(args);
@@ -62,7 +63,8 @@ public class MapsFragment extends Fragment {
             Serializable s = getArguments().getSerializable(ARG_PARAM1);
             breweries = (ArrayList<Brewery>) s ;
             cameraPos = getArguments().getString(ARG_PARAM2);
-            System.out.println("Maps instantiate, number of breweries : " + breweries.size());
+
+            System.out.println("Camera pos :" + cameraPos);
         }
     }
 
@@ -73,7 +75,7 @@ public class MapsFragment extends Fragment {
 
         mMapView = (MapView) rootView.findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
-        System.out.println("Maps instantiate, number of breweries : " + breweries.size());
+        //System.out.println("Maps instantiate, number of breweries : " + breweries.size());
         mMapView.onResume();
 
         try{

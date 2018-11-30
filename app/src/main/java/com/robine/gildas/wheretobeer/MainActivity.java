@@ -51,14 +51,15 @@ public class MainActivity extends AppCompatActivity implements  TabLayout.OnTabS
                 GenericTypeIndicator<ArrayList<Brewery>> breweryListtype = new GenericTypeIndicator<ArrayList<Brewery>>() {};
                 breweriesAL = (ArrayList<Brewery>) dataSnapshot.getValue(breweryListtype);
                 System.out.println("Firebase OK : "+ breweriesAL.size());
-                initLayout();
                 Intent intent = getIntent();
-
+                String pos  ="0,0";
                 Beer beer = (Beer) intent.getSerializableExtra("beer");
                 if (beer != null){
-                    toMapsFrag(beer);
-                    viewPager.setCurrentItem(1);
+                    pos = beer.getCoordinates();
+
                 }
+                initLayout(pos);
+
 
 
             }
@@ -79,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements  TabLayout.OnTabS
 
     }
 
-    public void initLayout(){
+    public void initLayout(String campPos){
         //Ajouter la toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -98,10 +99,13 @@ public class MainActivity extends AppCompatActivity implements  TabLayout.OnTabS
         viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setOffscreenPageLimit(1);
         //Create and setting pager adapter
-        statePagerAdapterFrag = new StatePagerAdapterFrag(getSupportFragmentManager(),tabLayout.getTabCount(), breweriesAL);
+        statePagerAdapterFrag = new StatePagerAdapterFrag(getSupportFragmentManager(),tabLayout.getTabCount(), breweriesAL,  campPos);
         viewPager.setAdapter(statePagerAdapterFrag);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(this);
+        if(!campPos.equals("0,0")){
+            viewPager.setCurrentItem(1);
+        }
     }
 
 
