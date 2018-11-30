@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".InfoFrag">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/f_titre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="61dp"
+            android:layout_marginEnd="118dp"
+            android:layout_marginStart="118dp"
+            android:text="Informations :"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            app:layout_constraintBottom_toTopOf="@+id/f_paragraphe_1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/f_paragraphe_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:text="Cette application sur concentre sur le recensement des bières. Elle est composée de 4 onglets : le premier permettant de consulter la liste des bières recensées, le second localisant les brasseurs de ces bières, le troisième permettant d’ajouter des bières à la base de données, et le dernier expliquant l’application. "
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/f_titre" />
+
+        <TextView
+            android:id="@+id/f_paragraphe_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Le premier onglet affiche la liste des bières, et redirige vers une description de la bière. Une fois sur la description de la bière, en appuyant sur l’icône, l’utilisateur est redirigé sur la localisation du brasseur."
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/f_paragraphe_1" />
+
+        <TextView
+            android:id="@+id/f_paragraphe_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Le second onglet est une carte affichant tous les brasseurs, avec l’utilisation du clustering pour regrouper les indicateurs lors d’un dézoom. "
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/f_paragraphe_2" />
+
+        <TextView
+            android:id="@+id/f_paragraphe_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="75dp"
+            android:text="Le troisième onglet permet d’ajouter des bières à notre base de données, en ajoutant un descriptif complet de la bière."
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/f_paragraphe_2" />
+
+        <TextView
+            android:id="@+id/f_paragraphe_4"
+            android:layout_width="wrap_content"
+            android:layout_height="73dp"
+            android:layout_marginTop="12dp"
+            android:text="Nous avons utilisé une base de donnée open source : https://www.kaggle.com/ritesaluja/beer-beer-beer . Nous l’avons ensuite transféré dans firebase/realtimeDatabase. Ce qui nous a permis de bien gérer l’ajout de nouvelles bières en temps-réel. "
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/f_paragraphe_3" />
+    </android.support.constraint.ConstraintLayout>
+</FrameLayout>

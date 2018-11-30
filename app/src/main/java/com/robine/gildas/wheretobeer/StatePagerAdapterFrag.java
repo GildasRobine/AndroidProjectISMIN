@@ -29,8 +29,11 @@ public class StatePagerAdapterFrag extends FragmentStatePagerAdapter {
                 MapsFragment mapsFragment = MapsFragment.newInstance(breweries,camPOs);
                 return mapsFragment;
             case 2 :
-                DetailsInfoFrag detailsInfoFrag = new DetailsInfoFrag();
-                return detailsInfoFrag;
+                AddBeerFrag addBeerFrag = new AddBeerFrag();
+                return addBeerFrag;
+            case 3 :
+                InfoFrag infoFrag = new InfoFrag();
+                return infoFrag;
             default :
                 return null;
         }
