@@ -17,6 +17,7 @@ import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.maps.android.clustering.ClusterManager;
 
@@ -29,14 +30,27 @@ public class MapsFragment extends Fragment {
     MapView mMapView;
     private GoogleMap googleMap;
     ArrayList<Brewery> breweries;
+    private String cameraPos ;
     private static final String ARG_PARAM1 ="breweries";
+    private static final String ARG_PARAM2 ="camPosStr";
     private ClusterManager<Brewery> breweryClusterManager;
 
     //Override method onCreateView
     public static MapsFragment newInstance(ArrayList<Brewery> breweries) {
 
         Bundle args = new Bundle();
-        args.putSerializable("breweries",breweries);
+        args.putSerializable(ARG_PARAM1,breweries);
+        args.putSerializable(ARG_PARAM2,"0,0");
+        MapsFragment fragment = new MapsFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    public static MapsFragment newInstance(ArrayList<Brewery> breweries, String cameraPos) {
+
+        Bundle args = new Bundle();
+        args.putSerializable(ARG_PARAM1,breweries);
+        args.putSerializable(ARG_PARAM2,cameraPos);
         MapsFragment fragment = new MapsFragment();
         fragment.setArguments(args);
         return fragment;
@@ -48,7 +62,9 @@ public class MapsFragment extends Fragment {
         if (getArguments() != null) {
             Serializable s = getArguments().getSerializable(ARG_PARAM1);
             breweries = (ArrayList<Brewery>) s ;
-            System.out.println("Maps instantiate, number of breweries : " + breweries.size());
+            cameraPos = getArguments().getString(ARG_PARAM2);
+
+            System.out.println("Camera pos :" + cameraPos);
         }
     }
 
@@ -59,7 +75,7 @@ public class MapsFragment extends Fragment {
 
         mMapView = (MapView) rootView.findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
-        System.out.println("Maps instantiate, number of breweries : " + breweries.size());
+        //System.out.println("Maps instantiate, number of breweries : " + breweries.size());
         mMapView.onResume();
 
         try{
@@ -72,7 +88,7 @@ public class MapsFragment extends Fragment {
             @Override
             public void onMapReady(GoogleMap mMap) {
                 googleMap = mMap;
-                setUpClusterer();
+                setUpClusterer(cameraPos);
                 breweryClusterManager.cluster();
 
 
@@ -143,9 +159,16 @@ public class MapsFragment extends Fragment {
         mMapView.onLowMemory();
     }
 
-    private void setUpClusterer() {
+    private void setUpClusterer(String camPos) {
         // Position the map.
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(43.529742, 5.447427), 10));
+        if(!camPos.equals("0,0")){
+            String[] sepLatLng = camPos.split(",");
+            LatLng camLatLng = new LatLng(Double.valueOf(sepLatLng[0]), Double.valueOf(sepLatLng[1]));
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(camLatLng,10));
+        }else{
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(43.529742, 5.447427), 10));
+        }
+
 
         // Initialize the manager with the context and the map.
         // (Activity extends context, so we can pass 'this' in the constructor.)

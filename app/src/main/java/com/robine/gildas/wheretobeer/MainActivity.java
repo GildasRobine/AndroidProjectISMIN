@@ -1,8 +1,11 @@
 package com.robine.gildas.wheretobeer;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,11 +24,12 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements  TabLayout.OnTabSelectedListener{
+public class MainActivity extends AppCompatActivity implements  TabLayout.OnTabSelectedListener, MapsInterface{
     private TabLayout tabLayout;
     private StatePagerAdapterFrag statePagerAdapterFrag;
     private ViewPager viewPager;
     private ArrayList<Brewery> breweriesAL;
+    private FragmentManager fragmentManager;
 
     //Firebase
     FirebaseDatabase database;
@@ -36,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements  TabLayout.OnTabS
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        fragmentManager = getSupportFragmentManager();
         breweriesAL = new ArrayList<>();
         //Init Firebase
         database = FirebaseDatabase.getInstance();
@@ -47,9 +51,17 @@ public class MainActivity extends AppCompatActivity implements  TabLayout.OnTabS
                 GenericTypeIndicator<ArrayList<Brewery>> breweryListtype = new GenericTypeIndicator<ArrayList<Brewery>>() {};
                 breweriesAL = (ArrayList<Brewery>) dataSnapshot.getValue(breweryListtype);
                 System.out.println("Firebase OK : "+ breweriesAL.size());
-                initLayout();
-                Toast toast = Toast.makeText(getApplicationContext(),breweriesAL.size()+"",Toast.LENGTH_LONG);
-                toast.show();
+                Intent intent = getIntent();
+                String pos  ="0,0";
+                Beer beer = (Beer) intent.getSerializableExtra("beer");
+                if (beer != null){
+                    pos = beer.getCoordinates();
+
+                }
+                initLayout(pos);
+
+
+
             }
 
             @Override
@@ -68,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements  TabLayout.OnTabS
 
     }
 
-    public void initLayout(){
+    public void initLayout(String campPos){
         //Ajouter la toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -85,11 +97,15 @@ public class MainActivity extends AppCompatActivity implements  TabLayout.OnTabS
 
         //Init ViewPager
         viewPager = (ViewPager) findViewById(R.id.pager);
+        viewPager.setOffscreenPageLimit(1);
         //Create and setting pager adapter
-        statePagerAdapterFrag = new StatePagerAdapterFrag(getSupportFragmentManager(),tabLayout.getTabCount(), breweriesAL);
+        statePagerAdapterFrag = new StatePagerAdapterFrag(getSupportFragmentManager(),tabLayout.getTabCount(), breweriesAL,  campPos);
         viewPager.setAdapter(statePagerAdapterFrag);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(this);
+        if(!campPos.equals("0,0")){
+            viewPager.setCurrentItem(1);
+        }
     }
 
 
@@ -143,5 +159,16 @@ public class MainActivity extends AppCompatActivity implements  TabLayout.OnTabS
             }
         });
     }
+
+    public void toMapsFrag(Beer beer){
+        String coordinates = beer.getCoordinates();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        MapsFragment mapsFragment = MapsFragment.newInstance(breweriesAL,coordinates);
+        fragmentTransaction.replace(R.id.container, mapsFragment);
+        fragmentTransaction.commit();
+        System.out.println("Maps Frag Committed");
+    }
+
+
 
 }

@@ -8,19 +8,19 @@ import java.io.Serializable;
 
 public class Brewery implements Serializable, ClusterItem {
 
-    String brewery_id;
+    private String brewery_id;
     @PropertyName("Brewer")
-    String brewer;
+    private String brewer;
     @PropertyName("Address")
-    String address;
+    private String address;
     @PropertyName("City")
-    String city;
+    private String city;
     @PropertyName("State")
-    String state;
+    private String state;
     @PropertyName("Country")
-    String country;
+    private String country;
     @PropertyName("Coordinates")
-    String coordinates;
+    private String coordinates;
 
     public Brewery(){
 
